@@ -54,7 +54,6 @@ describe('Basic Practice', () => {
     describe('Remove all', () => {
       it('should remove all of the items', () => {
         cy.get('[data-test="remove-all"]').click();
-        // cy.get('[data-test="items-empty-state"]').should('have.length', 2);
         cy.get('[data-test="items"] li').should('not.exist');
       });
     });
