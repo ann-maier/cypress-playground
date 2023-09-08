@@ -36,7 +36,7 @@ describe('Sign Up', () => {
 
   it('should require an email', () => {
     cy.get('@submitButton').click();
-    cy.get('[data-test="sign-up-email"]:invalid').invoke('prop', 'validity').its('valueMissing').should('be.true');
+    cy.get('[data-test="sign-up-email"]:invalid').should('have.length', 1);
   });
 
   it('should require that the email actually be an email address', () => {

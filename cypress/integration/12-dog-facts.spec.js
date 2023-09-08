@@ -16,13 +16,36 @@ describe('Dog Facts', () => {
     cy.get('@emptyState');
   });
 
-  it('should make a request when the button is called', () => {});
+  it('should make a request when the button is called', () => {
+    cy.get('@fetchButton').click();
+    cy.wait('@api');
+  });
 
-  it('should adjust the amount when the select is changed', () => {});
+  it('should adjust the amount when the select is changed', () => {
+    const amount = '7';
+    cy.get('@amountSelect').select(amount);
+    
+    cy.get('@fetchButton').click();
+    cy.wait('@api').then((interception) => {
+      expect(interception.request.url).contains(`amount=${amount}`);
+    });
+  });
 
-  it('should show the correct number of facts on the page', () => {});
+  it('should show the correct number of facts on the page', () => {
+    cy.get('@fetchButton').click();
+    cy.wait('@api');
+    cy.get('[data-test=dog-fact]').should('have.length', 3);
+  });
 
-  it('should clear the facts when the "Clear" button is pressed', () => {});
+  it('should clear the facts when the "Clear" button is pressed', () => {
+    cy.get('@clearButton').click();
+    cy.get('[data-test=dog-fact]').should('not.exist');
+    cy.get('@emptyState');
+  });
 
-  it("should reflect the number of facts we're looking for in the title", () => {});
+  it("should reflect the number of facts we're looking for in the title", () => {
+    const amount = '7';
+    cy.get('@amountSelect').select(amount);
+    cy.title().should('equal', `${amount} Dog Facts`);
+  });
 });
